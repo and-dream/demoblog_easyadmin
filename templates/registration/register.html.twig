@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}inscription{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">inscription</h1>
+    <div class="container">
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm, {
+        attr: {
+        novalidate: 'novalidate'
+    }
+    }) }}
+         {{ form_row(registrationForm.prenom) }}
+          {{ form_row(registrationForm.nom) }}
+           {{ form_row(registrationForm.adresse) }}
+           {{ form_row(registrationForm.ville) }}
+            {{ form_row(registrationForm.codePostal) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword) }}
+        
+
+        <button type="submit" class="btn btn-info">s'inscrire</button>
+    {{ form_end(registrationForm) }}</div>
+{% endblock %}
