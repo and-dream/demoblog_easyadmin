@@ -5,11 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -24,11 +25,23 @@ class ArticleCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('title', 'Titre'),  //écrire le label que l'on souhaite à la suite
-            TextField::new('image'),
             TextEditorField::new('content')->onlyOnForms(),   //on le veut que sur le form (ajout & édition)
             TextareaField::new('content', 'Contenu')->hideOnForm()->setMaxlength(20),
             DateTimeField::new('createdAt', "Date d'enregistrement")->hideOnForm()->setFormat('dd.MM.yyy à HH:mm:ss zzz'),
             AssociationField::new('category', 'Catégorie'),
+            //!traitement de l'image
+            //*création (new)
+            ImageField::new('image')->setUploadDir('public/upload/')->setUploadedFileNamePattern('[timestamp]-[slug]-.[extension]')->onlyWhenCreating(),
+
+            //*update
+            ImageField::new('image')->setUploadDir('public/upload/')->setUploadedFileNamePattern('[timestamp]-[slug].[extension]')->setFormTypeOptions(['required' => false])->onlyWhenUpdating(),
+
+
+            //*affichage
+            ImageField::new('image')->setBasePath('upload/')->hideOnForm()
+
+
+
         ];
     }
     //surcharger et non créer une nouvelle entité

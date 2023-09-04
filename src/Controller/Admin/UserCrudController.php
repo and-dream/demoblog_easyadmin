@@ -36,8 +36,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('ville'),
             IntegerField::new('codePostal', 'Code Postal'),
             TextField::new('password', 'Mot de passe')->setFormType(PasswordType::class)->onlyWhenCreating(),
-            CollectionField::new('roles'),
-            
+            CollectionField::new('roles')->setTemplatePath('/admin/field/roles.html.twig'),    
         ];
     }
 
