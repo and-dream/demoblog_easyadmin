@@ -88,4 +88,10 @@ class Category
 
         return $this;
     }
+
+    //on va créer une méthode pour afficher mon objet en string
+    public function __toString()
+    {
+        return $this->title;  
+    }
 }
